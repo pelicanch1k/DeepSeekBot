@@ -4,6 +4,8 @@ from aiogram.filters import CommandStart, Command
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
+from .deep_seek_service import DeepSeekService
+
 router = Router()
 
 @router.message(CommandStart())
@@ -12,4 +14,6 @@ async def cmd_start(message: Message):
 
 @router.message()
 async def question_from_user(message: Message):
-    pass
+    print("user message: " + message.text)
+    answer = DeepSeekService().find_answer(message.text)
+    await message.reply(answer)
